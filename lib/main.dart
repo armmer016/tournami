@@ -1,21 +1,21 @@
-
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:tournami/login.dart';
 import 'package:tournami/result.dart';
-
+import 'package:tournami/verification_page.dart';
 
 void main() async {
-  // await Firebase.initializeApp(
-  //     options: const FirebaseOptions(
-  //         apiKey: "AIzaSyAA3JdGT-qsSaHkVROg7eQeVdE0vMKhLzs",
-  //         authDomain: "tournami.firebaseapp.com",
-  //         projectId: "tournami",
-  //         storageBucket: "tournami.appspot.com",
-  //         messagingSenderId: "630227307963",
-  //         appId: "1:630227307963:web:52f4eec21f29edae1e489e"));
-  
-  
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(
+      options: const FirebaseOptions(
+          apiKey: "AIzaSyAA3JdGT-qsSaHkVROg7eQeVdE0vMKhLzs",
+          authDomain: "tournami.firebaseapp.com",
+          projectId: "tournami",
+          storageBucket: "tournami.appspot.com",
+          messagingSenderId: "630227307963",
+          appId: "1:630227307963:ios:d967e86acbc456da1e489e"));
+
   runApp(const MyApp());
 }
 
@@ -31,7 +31,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: LoginPage(),
+      routes: {
+        "/home": (context) => MyHomePage(
+              title: "home",
+            ),
+        "/verification": (context) => VerificationPage(),
+      },
     );
   }
 }
@@ -92,7 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 SizedBox(
-                  width: padding/2,
+                  width: padding / 2,
                 ),
                 Expanded(
                   flex: 4,
@@ -125,7 +131,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
                 SizedBox(
-                  width: padding/2,
+                  width: padding / 2,
                 ),
               ],
             ),

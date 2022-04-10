@@ -1,4 +1,3 @@
-
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -66,7 +65,7 @@ class _ResultPageState extends State<ResultPage> {
   Future<void> sendQuery() async {
     var res = await http.post(
       Uri.parse(endpoint),
-      headers: {"Authorization": "Bearer search-fhnbbdprkcratvdeeckf8ng6"},
+      headers: {"Authorization": "Bearer search-kkzaiz6xmkdhv4qhuvw4goiv"},
       body: {"query": widget.query},
     );
 
@@ -110,7 +109,7 @@ class _ResultPageState extends State<ResultPage> {
   Widget resultCard(CardPlace? cardplace, int index) {
     return Padding(
       padding: EdgeInsets.symmetric(
-          horizontal: MediaQuery.of(context).size.width * 0.1),
+          horizontal: MediaQuery.of(context).size.width * 0.03),
       child: Stack(
         children: [
           GestureDetector(
@@ -145,7 +144,7 @@ class _ResultPageState extends State<ResultPage> {
                   // ignore: sized_box_for_whitespace
                   Container(
                     height: MediaQuery.of(context).size.height * 0.15,
-                    width: MediaQuery.of(context).size.width * 0.2,
+                    width: MediaQuery.of(context).size.width * 0.35,
                     child: cardplace?.results[index].data == null
                         ? const Icon(
                             Icons.image_search_rounded,
@@ -169,22 +168,29 @@ class _ResultPageState extends State<ResultPage> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        cardplace?.results[index].name.raw ?? '',
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline6!
-                            .copyWith(fontWeight: FontWeight.w700),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.5,
+                        child: Text(cardplace?.results[index].name.raw ?? '',
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline6!
+                                .copyWith(
+                                    fontWeight: FontWeight.w700,
+                                    fontSize:
+                                        MediaQuery.of(context).size.width * 0.04),
+                            overflow: TextOverflow.ellipsis),
                       ),
                       const SizedBox(
                         height: 5,
                       ),
-                      Text(
-                        cardplace?.results[index].address.raw ?? '',
-                        style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                            fontSize:
-                                MediaQuery.of(context).size.width * 0.011),
-                        overflow: TextOverflow.ellipsis,
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.5,
+                        child: Text(
+                          cardplace?.results[index].address.raw ?? '',
+                          style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                              fontSize: MediaQuery.of(context).size.width * 0.023),
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
                       const SizedBox(
                         height: 5,
@@ -210,19 +216,19 @@ class _ResultPageState extends State<ResultPage> {
                                     .toString() +
                                 " km",
                         style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                            fontSize:
-                                MediaQuery.of(context).size.width * 0.011),
+                            fontSize: MediaQuery.of(context).size.width * 0.023),
                         overflow: TextOverflow.ellipsis,
                       ),
                       const SizedBox(
                         height: 5,
                       ),
-                      Text(
-                        'Search score: ' +
-                            (cardplace?.results[index].meta.score.toString() ??
-                                '0.0'),
-                        style: Theme.of(context).textTheme.caption,
-                      ),
+                      
+                      // Text(
+                      //   'Search score: ' +
+                      //       (cardplace?.results[index].meta.score.toString() ??
+                      //           '0.0'),
+                      //   style: Theme.of(context).textTheme.caption,
+                      // ),
                     ],
                   ),
                 ],
@@ -241,7 +247,13 @@ class _ResultPageState extends State<ResultPage> {
                             ? Colors.green[400]
                             : Colors.black,
                 child: Text(
-                  " " + ((index + 1).toString()+(!rankByScore&&index==0 ? " nearest to you" : "")).toString() + " ",
+                  " " +
+                      ((index + 1).toString() +
+                              (!rankByScore && index == 0
+                                  ? " nearest to you"
+                                  : ""))
+                          .toString() +
+                      " ",
                   style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -291,8 +303,8 @@ class _ResultPageState extends State<ResultPage> {
     if (!calculating) {
       setState(() {
         rankByScore = true;
-        card?.results.sort((a, b) => 
-                b.meta.score.toDouble().compareTo(a.meta.score.toDouble())); // dsc
+        card?.results.sort((a, b) =>
+            b.meta.score.toDouble().compareTo(a.meta.score.toDouble())); // dsc
       });
     } else {
       showDialog(
@@ -325,16 +337,18 @@ class _ResultPageState extends State<ResultPage> {
                   : const Center(child: Text("No result found!"))),
         ],
       ),
-      floatingActionButton: rankByScore ? FloatingActionButton(
-        onPressed: rankByDistance,
-        tooltip: 'Rank by distance',
-        child: const Icon(Icons.gps_fixed_rounded),
-      ) : FloatingActionButton(
-        backgroundColor: Colors.amber,
-        onPressed: _rankByScore,
-        tooltip: 'Rank by score',
-        child: const Icon(Icons.sort_rounded),
-      ),
+      floatingActionButton: rankByScore
+          ? FloatingActionButton(
+              onPressed: rankByDistance,
+              tooltip: 'Rank by distance',
+              child: const Icon(Icons.gps_fixed_rounded),
+            )
+          : FloatingActionButton(
+              backgroundColor: Colors.amber,
+              onPressed: _rankByScore,
+              tooltip: 'Rank by score',
+              child: const Icon(Icons.sort_rounded),
+            ),
     );
   }
 }
