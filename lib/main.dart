@@ -37,6 +37,7 @@ class MyApp extends StatelessWidget {
               title: "home",
             ),
         "/verification": (context) => VerificationPage(),
+        "/login": (context) => LoginPage(),
       },
     );
   }
@@ -85,7 +86,34 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       extendBodyBehindAppBar: true,
 
-      appBar: AppBar(),
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new),
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) => AlertDialog(
+                elevation: 8,
+                title: Text("Are you sure to logout ?",
+                    style: Theme.of(context).textTheme.bodyLarge),
+                actionsPadding: EdgeInsets.symmetric(horizontal: 20),
+                actionsOverflowButtonSpacing: 60,
+                actions: [
+                  IconButton(
+                      onPressed: () {
+                        Navigator.of(context).pushNamedAndRemoveUntil('/login',ModalRoute.withName('/'));
+                      },
+                      icon: const Text(
+                        'Sure',
+                        style: TextStyle(
+                            color: Colors.red, fontWeight: FontWeight.w600),
+                      ))
+                ],
+              ),
+            );
+          },
+        ),
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

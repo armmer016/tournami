@@ -10,6 +10,7 @@ import 'package:geolocator/geolocator.dart';
 import 'dart:math' as Math;
 import 'package:firebase_storage/firebase_storage.dart';
 
+
 CardPlace? card;
 
 class ResultPage extends StatefulWidget {

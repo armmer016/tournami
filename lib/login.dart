@@ -53,6 +53,7 @@ class _LoginPageState extends State<LoginPage> {
 
     return Scaffold(
       appBar: AppBar(
+        title: const Text('Tournami', style: TextStyle(fontWeight: FontWeight.bold),),
         backgroundColor: Colors.green,
         elevation: 0,
       ),

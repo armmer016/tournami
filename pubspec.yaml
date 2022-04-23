@@ -41,6 +41,8 @@ dependencies:
   another_flushbar: ^1.10.28
   firebase_auth: ^3.3.13
   pin_code_fields: ^7.4.0
+  mapbox_gl: ^0.15.0
+  location: any
 
 dev_dependencies:
   flutter_test:
